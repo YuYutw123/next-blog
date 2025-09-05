@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "gray-matter": "^4.0.3",
     "next": "latest",
@@ -13,8 +14,10 @@
     "react-dom": "latest",
     "react-markdown": "^10.1.0",
     "remark": "^15.0.1",
+    "remark-directive": "^4.0.0",
     "remark-gfm": "^4.0.1",
-    "remark-html": "^16.0.1"
+    "remark-html": "^16.0.1",
+    "unist-util-visit": "^5.0.0"
   },
   "engines": {
     "node": ">=18"

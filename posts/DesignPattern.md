@@ -8,15 +8,7 @@ date: '2024-05-14'
 * Creational Patterns
 * provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created
 * 總而言之，就是提供一個可以父類別，讓使用者可以根據不同的需求去創造子類別，並實例化父類別的function，不一定每次調用都會創建新的實例
-* ![](/img/DesignPatterns/Pasted_image_20240428164511.png)
 #### Code
-
-
-|1|2|
-|-|-|
-|adfadf|a|
-
-
 
 ```cpp=
 #include<iostream>

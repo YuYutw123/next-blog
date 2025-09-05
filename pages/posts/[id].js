@@ -5,7 +5,11 @@ import Date from '../../components/date';
 import utilStyles from '../../styles/utils.module.css';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import styles from '../../styles/markdown.module.css';
+import markdownStyles from '../../styles/markdown.module.css';
+import admonitionStyles from '../../styles/admonition.module.css';
+import remarkDirective from "remark-directive";
+import remarkAdmonition from "../../lib/remarkAdmonition";
+import CodeBlock from "../../components/codeblock";
 
 export default function Post({ postData }) {
     return (
@@ -18,8 +22,36 @@ export default function Post({ postData }) {
                 <div className={utilStyles.lightText}>
                     <Date dateString={postData.date} />
                 </div>
-                <div className={styles.markdown}>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{postData.contentMarkdown}</ReactMarkdown>
+                <div className={`${markdownStyles.markdown} ${admonitionStyles.admonitionWrapper}`}>
+                    <ReactMarkdown
+                        remarkPlugins={[remarkGfm, remarkDirective, remarkAdmonition]}
+                        components={{
+                            code({ node, inline, className, children, ...props }) {
+                                const match = /language-(\w+)/.exec(className || "");
+                                
+                                // inline code 直接返回 <code>，不會產生 div
+                                if (inline) {
+                                    return (
+                                        <code className={className} {...props}>
+                                            {children}
+                                        </code>
+                                    );
+                                }
+                                
+                                // block code 才使用 CodeBlock 組件
+                                return (
+                                    <CodeBlock 
+                                        language={match ? match[1] : ""} 
+                                        isBlock={true}
+                                    >
+                                        {String(children).replace(/\n$/, "")}
+                                    </CodeBlock>
+                                );
+                            },
+                        }}
+                    >
+                        {postData.contentMarkdown}
+                    </ReactMarkdown>
                 </div>
             </article>
         </Layout>
